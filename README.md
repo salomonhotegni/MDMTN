@@ -5,7 +5,7 @@
 </div>
 
 
-Contained within this folder is the source code corresponding to our paper titled "Multi-Objective Optimization for Sparse Deep Neural Network Training". A new Multi-Task Learning model architecture is introduced, namely the Monitored Deep Multi-Task Network (MDMTN). The framework for conducting experiments is based on PyTorch. The code has been tested within the Python 3 environment using JupiterLab, and necessitates the use of some Python packages, namely ```pytorch, torchvision, numpy, Pillow, scipy,```
+Contained within this repository is the source code corresponding to our paper titled "Multi-Objective Optimization for Sparse Deep Neural Network Training". A new Multi-Task Learning model architecture is introduced, namely the Monitored Deep Multi-Task Network (MDMTN). The framework for conducting experiments is based on PyTorch. The code has been tested within the Python 3 environment using JupiterLab, and necessitates the use of some Python packages, namely ```pytorch, torchvision, numpy, Pillow, scipy,```
 and ```sklearn.``` 
 We provide the (code to generate the) newly introduced Cifar10Mnist dataset in ```/Data_loaders/Create_Cifar10Mnist_dataset.py```.
 
