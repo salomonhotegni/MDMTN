@@ -8,6 +8,11 @@ We provide the (code to generate the) newly introduced Cifar10Mnist dataset in `
     <img src="/Images/MDMTN_diag_new.jpg" alt="Monitored Deep Multi-Task Network" width="550" height="300">
 </div>
 
+<figure class="image">
+  <img src="/Images/MDMTN_diag_new.jpg">
+  <figcaption>Figure 1. Diagram of the Monitored Deep Multi-Task Network (MDMTN) with 2 main tasks. The task-specific monitors are designed to capture task-specific information that the shared network may miss.</figcaption>
+</figure>
+
 ## USAGE
 
 The script ```Train_and_Test.py```
