@@ -1,8 +1,7 @@
 # Multi-Objective Optimization for Sparse Deep Neural Network Training
 
-Contained within this repository is the source code corresponding to our paper titled "Multi-Objective Optimization for Sparse Deep Neural Network Training". A new Multi-Task Learning model architecture is introduced, namely the Monitored Deep Multi-Task Network (MDMTN). The framework for conducting experiments is based on PyTorch. The code has been tested within the Python 3 environment using JupiterLab, and necessitates the use of some Python packages: ```pytorch, torchvision, numpy, Pillow, scipy,```
-and ```sklearn.``` 
-We provide the (code to generate the) newly introduced Cifar10Mnist dataset in ```/Data_loaders/Create_Cifar10Mnist_dataset.py```.
+Contained within this repository is the source code corresponding to our paper titled "Multi-Objective Optimization for Sparse Deep Neural Network Training". A new Multi-Task Learning (MTL) model architecture is introduced, namely the Monitored Deep Multi-Task Network (MDMTN). We investigate the feasibility of adaptively sparsifying the model during training to reduce model
+complexity and gain computational efficiency without significantly compromising its performance, if we are willing to apply task-specific adaptations to the network weights.
 
 <!--
 <div style="text-align:center;">
@@ -13,7 +12,12 @@ We provide the (code to generate the) newly introduced Cifar10Mnist dataset in `
 <figure class="image" style="text-align:center;">
   <img src="/Images/MDMTN_diag_new.jpg">
   <figcaption>Figure 1. Diagram of the Monitored Deep Multi-Task Network (MDMTN) with two main tasks. The task-specific monitors are designed to capture task-specific information that the shared network may miss.</figcaption>
-</figure>
+</figure> 
+
+
+<br />The framework for conducting experiments is based on PyTorch. The code has been tested within the Python 3 environment using JupiterLab, and necessitates the use of some Python packages: ```pytorch, torchvision, numpy, Pillow, scipy,```
+and ```sklearn.``` 
+We provide the (code to generate the) newly introduced Cifar10Mnist dataset in ```/Data_loaders/Create_Cifar10Mnist_dataset.py```.
 
 ## USAGE
 
