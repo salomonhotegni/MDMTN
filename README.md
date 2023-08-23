@@ -12,7 +12,7 @@ We provide the (code to generate the) newly introduced Cifar10Mnist dataset in `
 
 <figure class="image" style="text-align:center;">
   <img src="/Images/MDMTN_diag_new.jpg">
-  <figcaption>Figure 1. Diagram of the Monitored Deep Multi-Task Network (MDMTN) with 2 main tasks. The task-specific monitors are designed to capture task-specific information that the shared network may miss.</figcaption>
+  <figcaption>Figure 1. Diagram of the Monitored Deep Multi-Task Network (MDMTN) with two main tasks. The task-specific monitors are designed to capture task-specific information that the shared network may miss.</figcaption>
 </figure>
 
 ## USAGE
