@@ -232,7 +232,7 @@ def load_MultiMnist_mgda():
     X_test = np.array(X_test)
 
     plt.imshow(data_train[0][0])
-    plt.title(f'{(y_train[0][0], y_train[0][1])}')
+    plt.title(f'{(y_train[0][0].item(), y_train[0][1].item())}')
     plt.show()
 
     y_train = np.array(one_hot_encode_data(y_train))
