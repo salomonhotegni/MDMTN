@@ -36,4 +36,4 @@ Use the script named ```"twoDpf_study_mdmtn_cm.py"``` for the additional (2D) Pa
 We utilize specific code segments from [Sener Ozan and Vladlen Koltun](https://github.com/isl-org/MultiObjectiveOptimization)'s work 'Multi-task learning as multi-objective optimization' to train a model using the Multiple Gradient Descent Algorithm (MGDA). Additionally, we incorporate code from [Zhang Dejiao et al.](https://github.com/Dejiao2018/GrOWL)'s paper 'Learning to Share: Simultaneous Parameter Tying and Sparsification in Deep Learning' to implement GrOWL as the secondary objective function used. Moreover, we consider the work of [Mishkin Dmytro and Jiri Matas](https://github.com/shunk031/LSUV.pytorch) in 'All You Need is a Good Init' for the initialization of our models.
 
 ## CONTACT
-For any question, you can contact [Sedjro S. Hotegni](https://shsalomon.github.io/).
+For any question, you can contact [Sedjro S. Hotegni](sedjro.salomon.hotegni@uni-paderborn.de).
