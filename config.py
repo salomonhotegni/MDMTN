@@ -153,7 +153,7 @@ def get_params_singleModel(data_name, main_dir, mod_logdir, num_model, ind_task)
         mod_params_sg = {"ind_task": ind_task, "num_outs": [10, 10],
                         "lr": 0.0001, "lr_sched_coef": 0.98, "LR_scheduler": True, 
                         "lr_step_size": 1,
-                     "num_epochs": 10, "tol_epochs": None,
+                     "num_epochs": 100, "tol_epochs": None,
                      "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
                      "base_optimizer": optim.Adam, "criterion": torch.nn.functional.nll_loss,}
         
@@ -163,7 +163,7 @@ def get_params_singleModel(data_name, main_dir, mod_logdir, num_model, ind_task)
         mod_params_sg = {"ind_task": ind_task, "num_outs": [10, 10],
                         "lr": 1e-2, "lr_sched_coef": 0.5, "LR_scheduler": True, 
                         "lr_step_size": 30, "momentum": 0.9,
-                     "num_epochs": 32, "tol_epochs": None,
+                     "num_epochs": 100, "tol_epochs": None,
                      "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
                      "base_optimizer": optim.Adam, "criterion": torch.nn.functional.nll_loss,}
         
