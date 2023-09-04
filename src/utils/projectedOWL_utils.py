@@ -64,7 +64,7 @@ def proxOWL_segments(A, B):
 def proxOWL(z, mu):
         # Adapted from: https://github.com/Dejiao2018/GrOWL/blob/master/VGG/owl_projection/projectedOWL.py
         
-        #Store the signs of z
+        #Restore the signs of z
         sgn = np.sign(z)
         #Sort z to non-increasing order
         z = abs(z)
