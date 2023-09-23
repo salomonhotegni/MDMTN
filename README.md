@@ -37,3 +37,16 @@ We utilize specific code segments from [Sener Ozan and Vladlen Koltun](https://g
 
 ## CONTACT
 For any question, you can contact sedjro.salomon.hotegni@uni-paderborn.de.
+
+## CITING THIS WORK
+
+If you use this project or its findings in your research, please cite our paper:
+
+```
+@article{hotegni2023multi,
+  title={Multi-Objective Optimization for Sparse Deep Neural Network Training},
+  author={Hotegni, Sedjro S and Peitz, Sebastian and Berkemeier, Manuel},
+  journal={arXiv preprint arXiv:2308.12243},
+  year={2023}
+}
+```
