@@ -84,10 +84,13 @@ def train_multitask_model(train_loader, val_loader, model,
     best_exist = False
     best_accu_search = 0.0
     succeed_bst = False
+    orig_max_layerSRate = model.GrOWL_parameters["max_layerSRate"]
     while(k < max_iter):
         print("-------------------------------------")
         print(f"------ Algorithm Iteration {k+1}/{max_iter} ------")
         print("-------------------------------------")
+        if params_init["w"][0] > 0 and params_init["Sparsity_study"] and is_search:
+            model.GrOWL_parameters["max_layerSRate"] = (k+1)*orig_max_layerSRate/max_iter
         ### FIRST STEP: find best model weights
         TRAIN_LOSS = []
         VAL_ACCU = []
