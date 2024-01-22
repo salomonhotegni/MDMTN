@@ -109,29 +109,6 @@ def train_multitask_kdmtl_model(train_loader, val_loader, model,
             train_loss = train_loss/len(train_loader.dataset)
             TRAIN_LOSS.append(train_loss)
             scheduler.step()
-            #--------------------------------------------------------------------------#
-            # Evaluation process                                                             #
-            #--------------------------------------------------------------------------#
-            model.eval()
-            val_CORR = torch.zeros(num_tasks)
-            # with torch.no_grad():
-            #     all_targets = []
-            #     for j in range(num_tasks):
-            #         target_i = target[j]#.transpose(0, 1)    #.reshape(-1, 1)
-            #         all_targets.append(target_i)
-            #     all_targets = torch.stack(all_targets).transpose(0, 1)
-            #     data, targets = data.to(device), all_targets.to(device, dtype=torch.int64)
-
-            #     outputs, _ = model(data)
-            #     actu_val_CORR = []
-            #     for  j in range(num_tasks):
-            #         val_pred_j = outputs[j].argmax(dim=1, keepdim=True)
-            #         val_corr_j = val_pred_j.eq(targets[:, j].view_as(val_pred_j)).sum().item()
-            #         actu_val_CORR.append(val_corr_j)
-            #     actu_val_CORR = torch.tensor(actu_val_CORR)
-            #     val_CORR = val_CORR + actu_val_CORR
-            
-            #####################################
             
             with torch.no_grad():
                 for batch_idx, (data, target) in enumerate(val_loader):
@@ -156,12 +133,6 @@ def train_multitask_kdmtl_model(train_loader, val_loader, model,
                     val_accuracy.mean().item()))
             ######################################
 
-            #--------------------------------------------------------------------------#
-            # output                                                                   #
-            #--------------------------------------------------------------------------#
-            # print("val_accuracy before: ", val_CORR / len(val_loader.dataset))
-            # val_accuracy = 100 * val_CORR / len(val_loader.dataset)
-            # print("val_accuracy after: ", val_accuracy)
             VAL_ACCU.append(val_accuracy)
             if act_bst_accu < val_accuracy.mean().item():
                 act_bst_accu = val_accuracy.mean().item()
@@ -199,10 +170,6 @@ def full_training_kdmtl(train_loader, val_loader, model, params_init, init_model
         print("################################")
         print(f"#### Searching for Lambda ... ####")
         print("################################")
-        # total_samples = len(train_loader.dataset)
-        # num_samples_perc = int(total_samples * perc_data_search)
-        # random_indices = random.sample(range(total_samples), num_samples_perc)
-        # random_subset_train = [train_loader.dataset[i] for i in random_indices]
         Best_lmbd_accu = 0.0
         for lmbd in search_lambda[1]:
             print(f"******** For Lambda = {lmbd} ********")
