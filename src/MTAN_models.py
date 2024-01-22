@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 ###################################
-######## MULTI-TASK MODEL #########
+######## MULTI-TASK MODELS #########
 ###################################
 
 class MTAN_Network_I(nn.Module):
