@@ -5,8 +5,7 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 from Train_and_Test import train_and_test_MTANmodel_CM
-#from Train_and_Test import train_and_test_MTANmodel_MM
-
+#from Train_and_Test import train_and_test_MTANmodel_MM #(for MultiMNIST data)
 from config import get_params_mtan
 
 data_name = "Cifar10Mnist"
@@ -65,21 +64,6 @@ if __name__ == "__main__":
     print(datetime.datetime.now())
 
 #############################################
-    
-# Lambda used:  [0.01, 0.09]
-# Learning rate used:  0.001
-# Training completed !
-
-# Computation time: 26.364986793200174 minutes
-# 2024-01-18 13:16:11.922208
-# Testing ...
-
-# Test set: Average Accuracy: (69.26%)
-
-# Accuracy Task 1: 45.3000%
-# Accuracy Task 2: 93.2200%
-
-# Full MTAN Training Computation time: 26.375362888971964 minutes
         
 
 
