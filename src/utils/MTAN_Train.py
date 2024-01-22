@@ -130,9 +130,6 @@ def train_multitask_mtan_model(train_loader, val_loader, model,
             #--------------------------------------------------------------------------#
             # output                                                                   #
             #--------------------------------------------------------------------------#
-            # print("val_accuracy before: ", val_CORR / len(val_loader.dataset))
-            # val_accuracy = 100 * val_CORR / len(val_loader.dataset)
-            # print("val_accuracy after: ", val_accuracy)
             VAL_ACCU.append(val_accuracy)
             if act_bst_accu < val_accuracy.mean().item():
                 act_bst_accu = val_accuracy.mean().item()
