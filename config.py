@@ -162,7 +162,6 @@ def get_params_kdmtl(lmbds, data_name, main_dir, mod_logdir, num_model):
 
     if data_name == "Cifar10Mnist":
         mod_params_kdmtl = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0],
-                        #"max_iter": 12, "max_iter_search": 3, "max_iter_retrain": 10, 
                         "lr": 0.0001,"a_lr": 0.0001, "a_weight_decay": 5e-4, "LR_scheduler": True,
                         "lr_sched_coef": 0.98, "lr_sched_step_size": 25, 
                       "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
@@ -174,8 +173,7 @@ def get_params_kdmtl(lmbds, data_name, main_dir, mod_logdir, num_model):
         model = KDMTL_Network_II(num_classes = mod_params_kdmtl["num_outs"])
 
     elif data_name == "MultiMnist":
-        mod_params_kdmtl = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0],
-                        #"max_iter": 12, "max_iter_search": 3, "max_iter_retrain": 10, 
+        mod_params_kdmtl = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0], 
                         "lr": 0.0001,"a_lr": 0.0001, "a_weight_decay": 5e-4, "LR_scheduler": True,
                         "lr_sched_coef": 0.98, "lr_sched_step_size": 25, 
                       "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
