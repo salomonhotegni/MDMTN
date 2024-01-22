@@ -2,14 +2,20 @@ import torch
 import torch.optim as optim
 
 from src.utils.projectedOWL_utils import proxOWL
+
 from src.MDMTN_model_MM import SparseMonitoredMultiTaskNetwork_I
 from src.MDMTN_MGDA_model_MM import MDMTNmgda_MultiTaskNetwork_I
 from src.MDMTN_model_CM import SparseMonitoredMultiTaskNetwork_II
 from src.MDMTN_MGDA_model_CM import MDMTNmgda_MultiTaskNetwork_II
+
 from src.HPS_model_MM import HardPS_MultiTaskNetwork_I
 from src.HPS_MGDA_model_MM import HPSmgda_MultiTaskNetwork_I
 from src.HPS_model_CM import HardPS_MultiTaskNetwork_II
 from src.HPS_MGDA_model_CM import HPSmgda_MultiTaskNetwork_II
+
+from src.KDMTL_models import KDMTL_Network_I, KDMTL_SingleNetwork_I, KDMTL_Network_II, KDMTL_SingleNetwork_II 
+
+from src.MTAN_models import MTAN_Network_I, MTAN_Network_II
 
 from src.STL_model_MM import SingleTaskModel_I
 from src.STL_model_CM import SingleTaskModel_II
@@ -54,9 +60,10 @@ def get_params(k, archi_name, data_name, main_dir, mod_logdir, num_model, Sparsi
                            "epsilon": 0.0001, "num_tasks": 3, "num_outs": [10, 10],
                         "max_iter": 12, "max_iter_search": 3, "max_iter_retrain": 10,  
                         "lr": 0.0001, "lr_sched_coef": 0.98, "LR_scheduler": True, 
-                     "num_epochs": 3, "tol_epochs": None,
+                     "num_epochs": 3, "num_epochs_search": 3, "num_epochs_retrain": 3, "tol_epochs": None,
                      "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
-                     "mu": 0.0001,  "rho": 0.5,
+                     "mu": 6.8e-08,#  9e-08,
+                     "rho": 2,
                      "base_optimizer": optim.Adam, "is_search": Sparsity_study, "Sparsity_study": Sparsity_study,
                       "criterion": torch.nn.functional.nll_loss,}
         
@@ -67,6 +74,7 @@ def get_params(k, archi_name, data_name, main_dir, mod_logdir, num_model, Sparsi
                    "skip_layer": 3, # Skip layer with "3" neuron
                    "sim_preference": 0.8,
                    }
+        
         
         if archi_name.lower() == "hps":
             mod_params["min_sparsRate"] = 5.00 # (5 %)
@@ -85,9 +93,10 @@ def get_params(k, archi_name, data_name, main_dir, mod_logdir, num_model, Sparsi
                            "epsilon": 0.0001, "num_tasks": 3, "num_outs": [10, 10],
                         "max_iter": 12, "max_iter_search": 3, "max_iter_retrain": 10, 
                         "lr": 0.0025, "lr_sched_coef": 0.5, "LR_scheduler": True, 
-                      "num_epochs": 3, "tol_epochs": None,
+                      "num_epochs": 3, "num_epochs_search": 3, "num_epochs_retrain": 3, "tol_epochs": None,
                      "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
-                     "mu": 2.5e-05,  "rho": 0.5, 
+                     "mu": 2.5e-08,  
+                     "rho": 2, 
                      "base_optimizer": optim.Adam, "is_search": Sparsity_study, "Sparsity_study": Sparsity_study,
                       "criterion": torch.nn.functional.nll_loss,}
         
@@ -115,6 +124,7 @@ def get_params(k, archi_name, data_name, main_dir, mod_logdir, num_model, Sparsi
 
     return model, mod_params, GrOWL_parameters
 
+##########################################################################
 
 def get_params_mgda(archi_name, data_name, model_dir_path, device):
 
@@ -145,6 +155,76 @@ def get_params_mgda(archi_name, data_name, model_dir_path, device):
     else: raise ValueError(f"Unknown dataset {data_name} !")
 
     return model, mod_params_mgda
+
+##########################################################################
+
+def get_params_kdmtl(lmbds, data_name, main_dir, mod_logdir, num_model):
+
+    if data_name == "Cifar10Mnist":
+        mod_params_kdmtl = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0],
+                        #"max_iter": 12, "max_iter_search": 3, "max_iter_retrain": 10, 
+                        "lr": 0.0001,"a_lr": 0.0001, "a_weight_decay": 5e-4, "LR_scheduler": True,
+                        "lr_sched_coef": 0.98, "lr_sched_step_size": 25, 
+                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
+                     "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
+                     "search_lambda": [True, lmbds],
+                     "base_optimizer": optim.Adam, "KDMTL_single": KDMTL_SingleNetwork_II,
+                      "criterion": torch.nn.functional.nll_loss,}
+        
+        model = KDMTL_Network_II(num_classes = mod_params_kdmtl["num_outs"])
+
+    elif data_name == "MultiMnist":
+        mod_params_kdmtl = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0],
+                        #"max_iter": 12, "max_iter_search": 3, "max_iter_retrain": 10, 
+                        "lr": 0.0001,"a_lr": 0.0001, "a_weight_decay": 5e-4, "LR_scheduler": True,
+                        "lr_sched_coef": 0.98, "lr_sched_step_size": 25, 
+                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
+                     "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
+                     "search_lambda": [True, lmbds],
+                     "base_optimizer": optim.Adam, "KDMTL_single": KDMTL_SingleNetwork_I,
+                      "criterion": torch.nn.functional.nll_loss,}
+        
+        model = KDMTL_Network_I(num_classes = mod_params_kdmtl["num_outs"])
+
+    else: raise ValueError(f"Unknown dataset {data_name} !")
+
+    return model, mod_params_kdmtl
+
+##########################################################################
+
+def get_params_mtan(lmbds, lr_s, data_name, main_dir, mod_logdir, num_model):
+
+    if data_name == "Cifar10Mnist":
+        mod_params_mtan = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0],
+                        "lr": lr_s[0], "LR_scheduler": True,
+                        "lr_sched_coef": 0.5, #0.98, 
+                        "lr_sched_step_size": 25, 
+                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
+                     "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
+                     "search_lambda": [True, lmbds], "search_lr": [True, lr_s],
+                     "base_optimizer": optim.Adam,
+                      "criterion": torch.nn.functional.nll_loss,}
+        
+        model = MTAN_Network_II(num_classes = mod_params_mtan["num_outs"])
+
+    elif data_name == "MultiMnist":
+        mod_params_mtan = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0],
+                        "lr": lr_s[0], "LR_scheduler": True,
+                        "lr_sched_coef": 0.5, #0.98, 
+                        "lr_sched_step_size": 25, 
+                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
+                     "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
+                     "search_lambda": [True, lmbds], "search_lr": [True, lr_s],
+                     "base_optimizer": optim.Adam,
+                      "criterion": torch.nn.functional.nll_loss,}
+        
+        model = MTAN_Network_I(num_classes = mod_params_mtan["num_outs"])
+
+    else: raise ValueError(f"Unknown dataset {data_name} !")
+
+    return model, mod_params_mtan
+
+##########################################################################
 
 
 def get_params_singleModel(data_name, main_dir, mod_logdir, num_model, ind_task):
