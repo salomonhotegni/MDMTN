@@ -24,7 +24,7 @@ We provide the (code to generate the) newly introduced Cifar10Mnist dataset in `
 The script ```Train_and_Test.py```
 gathers the helper functions from ```/src/utils/``` for training and testing a model on a dataset, given a preference vector.
 
-We provide scripts for training an MDMTN model on the Cifar10Mnist dataset using our methodology as the default setting. However, these scripts are adaptable and applicable to variations such as the HPS model architecture, the MultiMnist dataset, and the MGDA method. This flexibility is enabled through the utilization of the ```config.py``` file.
+We provide scripts for training an MDMTN model on the Cifar10Mnist dataset using our methodology as the default setting. However, these scripts are adaptable and applicable to variations such as the HPS model architecture, the MultiMnist dataset, the MGDA, KDMTL, and MTAN methods. This flexibility is enabled through the utilization of the ```config.py``` file.
 
 To train a model for a specific preference vector $k$ while inducing sparsity, execute the script ```“example_mdmtn_cm.py”```. 
 For training a model with the Multiple Gradient Descent Algorithm (MGDA), run the script ```“example_mdmtn_mgda_cm.py”```.
