@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 from Train_and_Test import train_and_test_KDMTLmodel_CM, train_and_test_STL_model_CM
-#from Train_and_Test import train_and_test_KDMTLmodel_MM, train_and_test_STL_model_MM
+#from Train_and_Test import train_and_test_KDMTLmodel_MM, train_and_test_STL_model_MM #(for MultiMNIST data)
 
 from src.utils.KDMTL_Train import train_single_model_kdmtl
 from src.utils.KDMTL_Test import test_single_model_kdmtl
@@ -91,20 +91,3 @@ if __name__ == "__main__":
     # Print computation time
     print('\nFull KDMTL Training Computation time: {} minutes'.format(t_kdmtl_1/60))
     print(datetime.datetime.now())
-        
-
-############## KDMTL (CM) ##############
-
-# Training completed !
-
-# Computation time: 20.564743109544118 minutes
-# 2024-01-09 12:36:27.458356
-# Testing ...
-
-# Test set: Average Accuracy: (74.18%)
-
-# Accuracy Task 1: 54.0000%
-# Accuracy Task 2: 94.3500%
-
-# Full KDMTL Training Computation time: 32.18821784257889 minutes
-# 2024-01-09 12:36:28.036097
