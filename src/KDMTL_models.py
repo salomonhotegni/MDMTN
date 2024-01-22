@@ -52,7 +52,6 @@ class KDMTL_Network_I(nn.Module):
         #task_feats = []
         for t in range(self.num_tasks-1):
             sh_out_t = sh_out.clone()
-            #task_feats.append(self.adaptors[t](x))
             task_out = self.task_blocks[t](sh_out_t)
             task_outputs.append(F.log_softmax(task_out, dim=1))
         
@@ -121,7 +120,6 @@ class KDMTL_Network_II(nn.Module):
         task_feats = []
         for t in range(self.num_tasks-1):
             sh_out_t = sh_out.clone()
-            #task_feats.append(self.adaptors[t](x))
             task_out = self.task_blocks[t](sh_out_t)
             task_outputs.append(F.log_softmax(task_out, dim=1))
         
