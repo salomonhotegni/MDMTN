@@ -251,6 +251,9 @@ def train_test_MGDA(model, data_name, mod_params_mgda, device):
     momentum = mod_params_mgda["momentum"]
     lr = mod_params_mgda["lr"]
     model_dir_path = mod_params_mgda["model_dir_path"]
+    
+    if not os.path.exists(model_dir_path):
+        os.makedirs(model_dir_path)
 
     if data_name == "Cifar10Mnist":
         X_train, X_test, y_train, y_test = load_Cifar10Mnist_mgda()
@@ -275,6 +278,7 @@ def train_test_MGDA(model, data_name, mod_params_mgda, device):
     os.mkdir(model_dir_path)
 
     for i in range(model_repetitions):
+        t_0_rep = time()
         print(f"######## Repetition {i+1}/{model_repetitions} ########")
         model_multi = model
         loss_fn = nn.CrossEntropyLoss()
@@ -299,6 +303,10 @@ def train_test_MGDA(model, data_name, mod_params_mgda, device):
 
         # Save model iteration
         model_multi.save_model(model_dir_path + "/" + f"model_{i}")
+        
+        T_norm_1_rep = time()-t_0_rep
+        # Print computation time
+        print('\nComputation time for one ITERATION: {} minutes'.format(T_norm_1_rep/60))
 
         print("Testing...")
         model_multi.train(mode=False)
