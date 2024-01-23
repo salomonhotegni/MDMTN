@@ -164,7 +164,7 @@ def get_params_kdmtl(lmbds, data_name, main_dir, mod_logdir, num_model):
         mod_params_kdmtl = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0],
                         "lr": 0.0001,"a_lr": 0.0001, "a_weight_decay": 5e-4, "LR_scheduler": True,
                         "lr_sched_coef": 0.98, "lr_sched_step_size": 25, 
-                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
+                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 50,
                      "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
                      "search_lambda": [True, lmbds],
                      "base_optimizer": optim.Adam, "KDMTL_single": KDMTL_SingleNetwork_II,
@@ -176,7 +176,7 @@ def get_params_kdmtl(lmbds, data_name, main_dir, mod_logdir, num_model):
         mod_params_kdmtl = {"num_tasks": 2, "num_outs": [10, 10], "lmbd": lmbds[0], 
                         "lr": 0.0001,"a_lr": 0.0001, "a_weight_decay": 5e-4, "LR_scheduler": True,
                         "lr_sched_coef": 0.98, "lr_sched_step_size": 25, 
-                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
+                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 50,
                      "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
                      "search_lambda": [True, lmbds],
                      "base_optimizer": optim.Adam, "KDMTL_single": KDMTL_SingleNetwork_I,
@@ -197,7 +197,7 @@ def get_params_mtan(lmbds, lr_s, data_name, main_dir, mod_logdir, num_model):
                         "lr": lr_s[0], "LR_scheduler": True,
                         "lr_sched_coef": 0.5, #0.98, 
                         "lr_sched_step_size": 25, 
-                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
+                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 50,
                      "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
                      "search_lambda": [True, lmbds], "search_lr": [True, lr_s],
                      "base_optimizer": optim.Adam,
@@ -210,7 +210,7 @@ def get_params_mtan(lmbds, lr_s, data_name, main_dir, mod_logdir, num_model):
                         "lr": lr_s[0], "LR_scheduler": True,
                         "lr_sched_coef": 0.5, #0.98, 
                         "lr_sched_step_size": 25, 
-                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 25,
+                      "num_epochs": 200, "tol_epochs": None, "num_epochs_search": 50,
                      "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
                      "search_lambda": [True, lmbds], "search_lr": [True, lr_s],
                      "base_optimizer": optim.Adam,
@@ -252,4 +252,3 @@ def get_params_singleModel(data_name, main_dir, mod_logdir, num_model, ind_task)
     return model, mod_params_sg
         
     
-
