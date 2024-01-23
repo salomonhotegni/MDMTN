@@ -110,6 +110,11 @@ def train_multitask_kdmtl_model(train_loader, val_loader, model,
             TRAIN_LOSS.append(train_loss)
             scheduler.step()
             
+            #--------------------------------------------------------------------------#
+            # Evaluation process                                                             #
+            #--------------------------------------------------------------------------#
+            model.eval()
+            val_CORR = torch.zeros(num_tasks)
             with torch.no_grad():
                 for batch_idx, (data, target) in enumerate(val_loader):
                     all_targets = []
@@ -184,9 +189,22 @@ def full_training_kdmtl(train_loader, val_loader, model, params_init, init_model
     print("###############################")
     print(f"#### TRAINING started ! ####")
     print("###############################")
+    from time import time
+    # Start timer
+    import datetime
+    print(datetime.datetime.now())
+    t0 = time()
+    
     search_lambda[0] = False
     params_init["lmbd"] = Best_lmbd
     model, TRAIN_LOSS, VAL_ACCU, model_val_accuracy = train_multitask_kdmtl_model(train_loader, val_loader, model, params_init, init_model = init_model)
+    
+    T_norm_1 = time()-t0
+    # Print computation time
+    print('\nComputation time: {} minutes'.format(T_norm_1/60))
+    print(datetime.datetime.now())
+    
+    print("Lambda used: ", Best_lmbd)
     
     return model, TRAIN_LOSS, VAL_ACCU, model_val_accuracy
 
