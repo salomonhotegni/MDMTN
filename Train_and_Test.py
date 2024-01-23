@@ -156,12 +156,6 @@ def train_and_test_model_MM(model, MultiMNISt_params):
 
 def train_and_test_KDMTLmodel_CM(model, Cifar10mnist_params):
 
-    from time import time
-    # Start timer
-    import datetime
-    print(datetime.datetime.now())
-    t0 = time()
-
     train_loader, val_loader, test_loader = load_Cifar10Mnist_data()
     
     size_data_for_search = int(0.1 * len(train_loader.dataset))
@@ -179,11 +173,6 @@ def train_and_test_KDMTLmodel_CM(model, Cifar10mnist_params):
                           Cifar10mnist_params, init_model = True)
        
     print("Training completed !") 
-
-    T_norm_1 = time()-t0
-    # Print computation time
-    print('\nComputation time: {} minutes'.format(T_norm_1/60))
-    print(datetime.datetime.now())
 
     print("Testing ...") 
     Test_accuracy, prec_wrong_images = test_multitask_kdmtl_model(test_loader, final_model, Cifar10mnist_params, load = True) 
@@ -195,15 +184,9 @@ def train_and_test_KDMTLmodel_CM(model, Cifar10mnist_params):
 
 def train_and_test_KDMTLmodel_MM(model, MultiMNISt_params):
 
-    from time import time
-    # Start timer
-    import datetime
-    print(datetime.datetime.now())
-    t0 = time()
-
     train_loader, val_loader, test_loader = load_MultiMnist_data()
     
-    size_data_for_search = int(0.1 * len(train_loader.dataset))
+    size_data_for_search = int(0.2 * len(train_loader.dataset))
     _ = len(train_loader.dataset) - size_data_for_search
     dataset_for_search, _ = torch.utils.data.random_split(train_loader.dataset, [size_data_for_search, _])
     dataloader_for_search = torch.utils.data.DataLoader(dataset_for_search, batch_size=256, shuffle=True)
@@ -218,11 +201,6 @@ def train_and_test_KDMTLmodel_MM(model, MultiMNISt_params):
     
     print("Training completed !") 
 
-    T_norm_1 = time()-t0
-    # Print computation time
-    print('\nComputation time: {} minutes'.format(T_norm_1/60))
-    print(datetime.datetime.now())
-
     print("Testing ...") 
     Test_accuracy, prec_wrong_images = test_multitask_kdmtl_model(test_loader, final_model, MultiMNISt_params, load = True) 
 
@@ -232,15 +210,9 @@ def train_and_test_KDMTLmodel_MM(model, MultiMNISt_params):
 
 def train_and_test_MTANmodel_CM(model, Cifar10mnist_params):
 
-    from time import time
-    # Start timer
-    import datetime
-    print(datetime.datetime.now())
-    t0 = time()
-
     train_loader, val_loader, test_loader = load_Cifar10Mnist_data()
     
-    size_data_for_search = int(0.1 * len(train_loader.dataset))
+    size_data_for_search = int(0.2 * len(train_loader.dataset))
     _ = len(train_loader.dataset) - size_data_for_search
     dataset_for_search, _ = torch.utils.data.random_split(train_loader.dataset, [size_data_for_search, _])
     dataloader_for_search = torch.utils.data.DataLoader(dataset_for_search, batch_size=256, shuffle=True)
@@ -256,11 +228,6 @@ def train_and_test_MTANmodel_CM(model, Cifar10mnist_params):
        
     print("Training completed !") 
 
-    T_norm_1 = time()-t0
-    # Print computation time
-    print('\nComputation time: {} minutes'.format(T_norm_1/60))
-    print(datetime.datetime.now())
-
     print("Testing ...") 
     Test_accuracy, prec_wrong_images = test_multitask_mtan_model(test_loader, final_model, Cifar10mnist_params, load = True) 
 
@@ -269,12 +236,6 @@ def train_and_test_MTANmodel_CM(model, Cifar10mnist_params):
 #################################################################################
 
 def train_and_test_MTANmodel_MM(model, MultiMNISt_params):
-
-    from time import time
-    # Start timer
-    import datetime
-    print(datetime.datetime.now())
-    t0 = time()
 
     train_loader, val_loader, test_loader = load_MultiMnist_data()
     
@@ -292,11 +253,6 @@ def train_and_test_MTANmodel_MM(model, MultiMNISt_params):
                           MultiMNISt_params, init_model = True)
     
     print("Training completed !") 
-
-    T_norm_1 = time()-t0
-    # Print computation time
-    print('\nComputation time: {} minutes'.format(T_norm_1/60))
-    print(datetime.datetime.now())
 
     print("Testing ...") 
     Test_accuracy, prec_wrong_images = test_multitask_mtan_model(test_loader, final_model, MultiMNISt_params, load = True) 
@@ -380,4 +336,3 @@ def train_and_test_STL_model_MM(model, MultiMNISt_params_STL, train_func = None,
     return Test_accuracy, prec_wrong_images, ALL_TRAIN_LOSS, ALL_VAL_ACCU
 
 ###############################################
-
