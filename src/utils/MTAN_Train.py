@@ -68,7 +68,7 @@ def train_multitask_mtan_model(train_loader, val_loader, model,
         
         for i in range(max_epochs):
             print("----------------------------------")
-            print(f"-------- EPOCH {i+1} --------")
+            print(f"-------- EPOCH {i+1}/{max_epochs} --------")
             print("----------------------------------")
             #--------------------------------------------------------------------------#
             # Train process                                                             #
