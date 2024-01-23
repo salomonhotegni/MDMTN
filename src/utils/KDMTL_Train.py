@@ -137,9 +137,8 @@ def train_multitask_kdmtl_model(train_loader, val_loader, model,
             print('\nTest set: Average Accuracy: ({:.2f}%)\n'.format(
                     val_accuracy.mean().item()))
             ######################################
-
             #--------------------------------------------------------------------------#
-            # Evaluation process                                                             #
+            # output                                                                   #
             #--------------------------------------------------------------------------#
             VAL_ACCU.append(val_accuracy)
             if act_bst_accu < val_accuracy.mean().item():
