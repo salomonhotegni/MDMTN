@@ -59,7 +59,8 @@ def get_sequence(N, p):
             return sequence(n-N)  
     return sequence
 
-def inner_optimization(model, params_init, optimizer, list_batch, w, a, epsilon, criterion, train_loader, val_loader, device, num_tasks, mu, lmbd, act_bst_accu, best_exist = False):
+# def inner_optimization(model, params_init, optimizer, list_batch, w, a, epsilon, criterion, train_loader, val_loader, device, num_tasks, mu, lmbd, act_bst_accu, best_exist = False):
+def inner_optimization(model, params_init, optimizer, w, a, epsilon, criterion, train_loader, val_loader, device, num_tasks, mu, lmbd, act_bst_accu, best_exist = False):
     
         #--------------------------------------------------------------------------#
         # train process                                                            #
@@ -72,7 +73,7 @@ def inner_optimization(model, params_init, optimizer, list_batch, w, a, epsilon,
         
         cbatch_ind = 0
         for batch_idx, (data, target) in enumerate(train_loader):
-            if batch_idx in list_batch:
+            #if batch_idx in list_batch:
                 cbatch_ind += 1
                 all_targets = []
                 for j in range(num_tasks-1):
@@ -99,11 +100,17 @@ def inner_optimization(model, params_init, optimizer, list_batch, w, a, epsilon,
                 # if int(len(list_batch)/5) > 0: print_step = int(len(list_batch)/5)
                 # else: print_step = 1
                 
-                if cbatch_ind % 50 == 0: #print_step == 0:
-                    print('[BATCH ({}) ({:.0f}%)]\tLoss: {:.6f}'.format(
-                            batch_idx+1, 100. * cbatch_ind / len(list_batch),  loss.item()))
+        #         if cbatch_ind % 50 == 0: #print_step == 0:
+        #             print('[BATCH ({}) ({:.0f}%)]\tLoss: {:.6f}'.format(
+        #                     batch_idx+1, 100. * cbatch_ind / len(list_batch),  loss.item()))
         
-        train_loss = train_loss/len(list_batch) 
+        # train_loss = train_loss/len(list_batch) 
+        
+                if cbatch_ind % 50 == 0:
+                    print('[BATCH ({}) ({:.0f}%)]\tLoss: {:.6f}'.format(
+                                batch_idx+1, 100. * cbatch_ind / len(train_loader),  loss.item()))
+            
+        train_loss = train_loss/len(train_loader) 
         
         ################################################
         if params_init["w"][0] > 0:
