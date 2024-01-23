@@ -17,10 +17,12 @@ def train_multitask_model(train_loader, val_loader, model,
                           params_init, init_model = True):
     
     device, w, a, epsilon = params_init["device"], params_init["w"], params_init["a"], params_init["epsilon"]
-    num_tasks, num_outs, num_batches = params_init["num_tasks"], params_init["num_outs"], params_init["num_batchEpoch"]
+    num_tasks, num_outs = params_init["num_tasks"], params_init["num_outs"] #, params_init["num_batchEpoch"]
     max_iter_retrain, max_iter_search, num_epochs, tol_epochs = params_init["max_iter_retrain"], params_init["max_iter_search"], params_init["num_epochs"], params_init["tol_epochs"]
     num_model, main_dir, mod_logdir = params_init["num_model"], params_init["main_dir"], params_init["mod_logdir"]
     is_search, min_sparsRate = params_init["is_search"], params_init["min_sparsRate"]
+    
+    num_epochs_search, num_epochs_retrain = params_init["num_epochs_search"], params_init["num_epochs_retrain"]
     
     # file names
     if not os.path.exists("%s/%s"%(main_dir, mod_logdir)):
@@ -31,7 +33,7 @@ def train_multitask_model(train_loader, val_loader, model,
     # global variables
     violation_epochs = 0
     
-    seq_batch = get_sequence(len(train_loader), num_batches)
+    # seq_batch = get_sequence(len(train_loader), num_batches)
 
     #--------------------------------------------------------------------------#
     # START ALGORITHM                                                          #
@@ -44,6 +46,7 @@ def train_multitask_model(train_loader, val_loader, model,
     if params_init["w"][0] > 0 and params_init["Sparsity_study"]:
         if is_search:
             max_iter = max_iter_search
+            num_epochs = num_epochs_search
             # Create the model
             model = model.to(device)
             # Initialize the networks
@@ -52,8 +55,10 @@ def train_multitask_model(train_loader, val_loader, model,
                                   max_attempts=10, do_orthonorm=True, device=device) # initialize the model weights
         else:
             max_iter = max_iter_retrain
+            num_epochs = num_epochs_retrain
             zero_layers = params_init["zero_layers"]
             # similarity_m = params_init["similarity_m"]
+            
     else:
         model = model.to(device)
 
@@ -62,8 +67,8 @@ def train_multitask_model(train_loader, val_loader, model,
     lmbd = torch.ones(num_tasks, requires_grad = False)/num_tasks
 
     #### LOOP
-    cont = True
-    iterate = 0
+    # cont = True
+    # iterate = 0
     ALL_TRAIN_LOSS = []
     ALL_VAL_ACCU = []
     ALL_ORIG_losses = []
@@ -95,16 +100,16 @@ def train_multitask_model(train_loader, val_loader, model,
         TRAIN_LOSS = []
         VAL_ACCU = []
         ORIG_losses = []
-        epfinal = k*(num_epochs*num_batches + num_batches)
+        # epfinal = k*(num_epochs*num_batches + num_batches)
         for i in range(num_epochs):
             print("######################")
             print(f"#### EPOCH No {i+1}/{num_epochs} ####")
             print("######################")
-            start_batch = epfinal + i*num_batches
-            list_batch = seq_batch(start_batch)
-            # epsilon = optimizer.param_groups[0]['lr']
-            act_state = [k, i]
-            orig_train_losses, train_loss, val_accuracy, contrs_wc_after = inner_optimization(model, params_init, optimizer, list_batch, w, a, epsilon, criterion, train_loader, val_loader, device, num_tasks,
+            # start_batch = epfinal + i*num_batches
+            # list_batch = seq_batch(start_batch)
+            # # epsilon = optimizer.param_groups[0]['lr']
+            # act_state = [k, i]
+            orig_train_losses, train_loss, val_accuracy, contrs_wc_after = inner_optimization(model, params_init, optimizer, w, a, epsilon, criterion, train_loader, val_loader, device, num_tasks,
                                     mu, lmbd,  act_bst_accu, best_exist)
             
             ORIG_losses.append(orig_train_losses.numpy())
@@ -199,12 +204,23 @@ def full_training(train_loader, val_loader, model,
         params_init["zero_layers"] = ZERO_layers
         params_init["similarity_m"] = similarity_M
     
+        from time import time
+        # Start timer
+        import datetime
+        print(datetime.datetime.now())
+        t_0 = time()
+        
         print("###############################")
         print(f"#### RETRAINING started ! ####")
         print("###############################")
         params_init["is_search"] = False    
         model, TR_metrics, ALL_TRAIN_LOSS, ALL_VAL_ACCU, ALL_ORIG_losses, MODEL_VAL_ACCU, BEST_val_accu, Best_iter =  train_multitask_model(train_loader, val_loader, model,
                               params_init, init_model = False)
+    
+        T_1 = time()-t_0
+        # Print computation time
+        print('\nComputation time for RETRAINING: {} minutes'.format(T_1/60))
+        print(datetime.datetime.now())
         
     return model, TR_metrics, ALL_TRAIN_LOSS, ALL_VAL_ACCU, ALL_ORIG_losses, MODEL_VAL_ACCU, BEST_val_accu, Best_iter
 
@@ -273,7 +289,7 @@ def train_single_model(train_loader, val_loader, model, params_sg):
         for batch_idx, (data, target) in enumerate(train_loader):
             data, target = data.to(device), target[ind_task].to(device, dtype=torch.int64)
             optimizer.zero_grad()
-            output = model(data)
+            output, _ = model(data)
             loss = criterion(output, target)
             train_pred = output.argmax(dim=1, keepdim=True)
             train_corr += train_pred.eq(target.view_as(train_pred)).sum().item()
@@ -300,7 +316,7 @@ def train_single_model(train_loader, val_loader, model, params_sg):
         with torch.no_grad():
             for data, target in val_loader:
                 data, target = data.to(device), target[ind_task].to(device,  dtype=torch.int64)
-                output = model(data)
+                output, _ = model(data)
                 val_loss += criterion(output, target, reduction='sum').item()
                 pred = output.argmax(dim=1, keepdim=True)
                 total_pred = np.append(total_pred, pred.cpu().numpy())
