@@ -138,6 +138,9 @@ def train_multitask_kdmtl_model(train_loader, val_loader, model,
                     val_accuracy.mean().item()))
             ######################################
 
+            #--------------------------------------------------------------------------#
+            # Evaluation process                                                             #
+            #--------------------------------------------------------------------------#
             VAL_ACCU.append(val_accuracy)
             if act_bst_accu < val_accuracy.mean().item():
                 act_bst_accu = val_accuracy.mean().item()
