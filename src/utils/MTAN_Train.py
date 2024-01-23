@@ -205,7 +205,19 @@ def full_training_mtan(train_loader, val_loader, model, params_init, init_model 
     print("###############################")
     print(f"#### TRAINING started ! ####")
     print("###############################")
+    from time import time
+    # Start timer
+    import datetime
+    print(datetime.datetime.now())
+    t0 = time()
+    
     model, TRAIN_LOSS, VAL_ACCU, model_val_accuracy = train_multitask_mtan_model(train_loader, val_loader, model, params_init, init_model = init_model)
+    
+    
+    T_norm_1 = time()-t0
+    # Print computation time
+    print('\nComputation time: {} minutes'.format(T_norm_1/60))
+    print(datetime.datetime.now())
     
     print("Lambda used: ", Best_lmbd)
     print("Learning rate used: ", Best_lr)
