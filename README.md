@@ -1,4 +1,4 @@
-# Multi-Objective Optimization for Sparse Deep Neural Network Training
+# Multi-Objective Optimization for Sparse Deep Multi-Task Learning
 
 Contained within this repository is the source code corresponding to our paper titled "[Multi-Objective Optimization for Sparse Deep Neural Network Training](https://arxiv.org/abs/2308.12243)". A new Multi-Task Learning (MTL) model architecture is introduced, namely the Monitored Deep Multi-Task Network (MDMTN). We investigate the feasibility of adaptively sparsifying the model during training to reduce model
 complexity and gain computational efficiency without significantly compromising its performance, if we are willing to apply task-specific adaptations to the network weights.
