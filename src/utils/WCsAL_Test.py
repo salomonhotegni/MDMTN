@@ -56,16 +56,17 @@ def test_multitask_model(test_loader, model, params_init, TR_metrics):
 
 
 # Define function for testing a model
-def test_single_model(test_loader, model, params_sg):
+def test_single_model(test_loader, model, params_sg, load = True):
     
     num_model, device = params_sg["num_model"], params_sg["device"]
     main_dir, mod_logdir = params_sg["main_dir"] , params_sg["mod_logdir"] 
     ind_task = params_sg["ind_task"]
     
     model1 = model.to(device)
-    MODEL_FILE = str("%s/%s/sg_model%03d.pth"%(main_dir, mod_logdir, num_model))
-    model1.load_state_dict(torch.load(MODEL_FILE))
-
+    if load:
+        MODEL_FILE = str("%s/%s/sg_model%03d.pth"%(main_dir, mod_logdir, num_model))
+        model1.load_state_dict(torch.load(MODEL_FILE))
+    
     # Set model to evaluation mode
     model1.eval()
     test_loss = 0
@@ -77,7 +78,7 @@ def test_single_model(test_loader, model, params_sg):
     with torch.no_grad():
         for batch_idx, (data, target) in enumerate(test_loader):
             data, target = data.to(device), target[ind_task].to(device)
-            output = model1(data)
+            output, _ = model1(data)
             test_loss += criterion(output, target, reduction='sum').item()
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
@@ -86,6 +87,6 @@ def test_single_model(test_loader, model, params_sg):
     print("Number of Misclassified images: ", len(wrong_images))
     test_accuracy = 100. * correct / len(test_loader.dataset)
     print('\nTest Accuracy: ({:.2f}%)\n'.format(test_accuracy))
-          
+
     return test_accuracy, wrong_images
 
