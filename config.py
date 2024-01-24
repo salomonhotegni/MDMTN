@@ -124,7 +124,7 @@ def get_params(k, archi_name, data_name, main_dir, mod_logdir, num_model, Sparsi
 
     return model, mod_params, GrOWL_parameters
 
-##########################################################################
+#######################################################################
 
 def get_params_mgda(archi_name, data_name, model_dir_path, device):
 
