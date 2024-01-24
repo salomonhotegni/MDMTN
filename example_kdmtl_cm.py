@@ -1,17 +1,22 @@
+import warnings
+
 import torch
 import torch.backends.cudnn as cudnn
 
-import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
-from Train_and_Test import train_and_test_KDMTLmodel_CM, train_and_test_STL_model_CM
+from config import get_params_kdmtl, get_params_singleModel
+from src.KDMTL_models import (KDMTL_Network_I, KDMTL_Network_II,
+                              KDMTL_SingleNetwork_I, KDMTL_SingleNetwork_II)
+from src.utils.KDMTL_Test import test_single_model_kdmtl
+from src.utils.KDMTL_Train import train_single_model_kdmtl
+from Train_and_Test import (train_and_test_KDMTLmodel_CM,
+                            train_and_test_STL_model_CM)
+
 #from Train_and_Test import train_and_test_KDMTLmodel_MM, train_and_test_STL_model_MM #(for MultiMNIST data)
 
-from src.utils.KDMTL_Train import train_single_model_kdmtl
-from src.utils.KDMTL_Test import test_single_model_kdmtl
 
 
-from config import get_params_kdmtl, get_params_singleModel
 
 
 data_name = "Cifar10Mnist"
@@ -47,17 +52,18 @@ if __name__ == "__main__":
     if use_cuda == False:
         print("WARNING: CPU will be used for training.")
         
-    from time import time
     # Start timer
     import datetime
+    from time import time
     print("KDMTL: ", datetime.datetime.now())
     t_kdmtl_0 = time()
         
     #####################
     for i in range(num_tasks):
         ind_task = i
-        model_sg, params_STL = get_params_singleModel(data_name, main_dir_sg, mod_logdir_sg, num_model = i, ind_task = ind_task)
+        _, params_STL = get_params_singleModel(data_name, main_dir_sg, mod_logdir_sg, num_model = i, ind_task = ind_task)
 
+        model_sg = KDMTL_SingleNetwork_II(NUM_OUT = params_STL["num_outs"][ind_task])
         params_STL["device"] = device
         
         Test_accuracy, prec_wrong_images, ALL_TRAIN_LOSS, ALL_VAL_ACCU = train_test_func_sg(model_sg, params_STL,
