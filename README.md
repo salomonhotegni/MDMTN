@@ -45,7 +45,7 @@ If you use this project or its findings in your research, please cite our paper:
 ```
 @article{hotegni2023multi,
   title={Multi-Objective Optimization for Sparse Deep Multi-Task Learning},
-  author={Hotegni, Sedjro S and Peitz, Sebastian and Berkemeier, Manuel},
+  author={Hotegni, Sedjro S and Berkemeier, Manuel and Peitz, Sebastian},
   journal={arXiv preprint arXiv:2308.12243},
   year={2023}
 }
