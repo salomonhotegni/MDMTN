@@ -13,11 +13,8 @@ from src.utils.KDMTL_Train import train_single_model_kdmtl
 from Train_and_Test import (train_and_test_KDMTLmodel_CM,
                             train_and_test_STL_model_CM)
 
-#from Train_and_Test import train_and_test_KDMTLmodel_MM, train_and_test_STL_model_MM #(for MultiMNIST data)
-
-
-
-
+#from Train_and_Test import (train_and_test_KDMTLmodel_MM,
+#                            train_and_test_STL_model_MM) #(for MultiMNIST data)
 
 data_name = "Cifar10Mnist"
 lmbds = [[0.01, 0.04], [0.04, 0.01],
