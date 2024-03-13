@@ -34,7 +34,6 @@ if __name__ == "__main__":
     # Choose device
     use_cuda = torch.cuda.is_available()
     device = torch.device("cpu")#"cuda" if use_cuda else "cpu")
-    cudnn.benchmark = True
     if use_cuda == False:
         print("WARNING: CPU will be used for training.")
         
