@@ -122,18 +122,12 @@ def Cifar10Mnist_dataset():
         with open(f'{data_path}/test_10k_CIFAR_MNIST.pkl', 'rb') as f:
             test_10k_images = pickle.load(f)
 
-    transform_train = transforms.Compose([#transforms.Lambda(lambda x: Image.fromarray(np.uint8(x))),
-                                            # transforms.RandomRotation(20),
-                                            transforms.ToTensor(),
-                                            #transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-                                            #transforms.Lambda(lambda x: x.permute(0, 1, 2)),
+    transform_train = transforms.Compose([transforms.ToTensor(),
                                             transforms.Lambda(lambda x: np.transpose(x, (1, 2, 0))),
                                             transforms.Lambda(lambda x: np.array(x))  # Convert to NumPy array
                                             ])
 
     transform_test = transforms.Compose([transforms.ToTensor(),
-                                            #transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-                                            #transforms.Lambda(lambda x: x.permute(0, 1, 2)),
                                             transforms.Lambda(lambda x: np.transpose(x, (1, 2, 0))),
                                             transforms.Lambda(lambda x: np.array(x))  # Convert to NumPy array
                                             ])
