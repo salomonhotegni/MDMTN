@@ -3,7 +3,7 @@ from torchvision import transforms
 import Data.MultiMnist.get_MultiMnistDataset as dtsts
 
 
-def MultiMnist_loaders(data_path, split_rate, transformers = [None, None], batch_size = [256, 256]):
+def MultiMnist_loaders(data_path, split_rate, transformers = [None, None], batch_size = [256, 256], SEED = 42):
 
     configs = {
     "mnist": {
@@ -35,9 +35,10 @@ def MultiMnist_loaders(data_path, split_rate, transformers = [None, None], batch
     # Split the train_loader into train and validation loaders
     if (split_rate <= 0) or (split_rate >= 1):
         raise ValueError(" Use 0<split_rate<1")
+    generator = torch.Generator().manual_seed(SEED)
     train_size = int(split_rate * len(mm_train_dst))
     val_size = len(mm_train_dst) - train_size
-    train_set, val_set = torch.utils.data.random_split(mm_train_dst, [train_size, val_size])
+    train_set, val_set = torch.utils.data.random_split(mm_train_dst, [train_size, val_size], generator = generator)
 
     train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size[0], shuffle=True)
     val_loader = torch.utils.data.DataLoader(val_set, batch_size=batch_size[1], shuffle=False)
