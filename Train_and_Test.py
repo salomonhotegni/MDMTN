@@ -26,8 +26,8 @@ def load_Cifar10Mnist_data():
     split_rate = 0.8
     batch_size = [256, 256] # (train, test)
 
-    train_transform = transforms.Compose([#transforms.Lambda(lambda x: Image.fromarray(np.uint8(x))),
-                                        #transforms.RandomRotation(20),
+    train_transform = transforms.Compose([transforms.Lambda(lambda x: Image.fromarray(np.uint8(x))), #
+                                        transforms.RandomRotation(20), #
                                         transforms.ToTensor(),
                                         transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
                                         transforms.Lambda(lambda x: x.permute(0, 1, 2))
@@ -74,8 +74,8 @@ def train_and_test_model_CM(model, Cifar10mnist_params):
     print(f"Training... [--- running on {device} ---]")
     
     final_model, TR_metrics, ALL_TRAIN_LOSS, ALL_VAL_ACCU, ALL_ORIG_losses, MODEL_VAL_ACCU, BEST_val_accu, Best_iter = full_training(train_loader, val_loader, model,
-                          Cifar10mnist_params, init_model = True)
-       
+                        Cifar10mnist_params, init_model = True)
+    
     print("Training completed !") 
 
     T_norm_1 = time()-t0
@@ -211,7 +211,7 @@ def train_and_test_MTANmodel_CM(model, Cifar10mnist_params):
 
     train_loader, val_loader, test_loader = load_Cifar10Mnist_data()
     
-    size_data_for_search = int(0.2 * len(train_loader.dataset))
+    size_data_for_search = int(0.5 * len(train_loader.dataset))
     _ = len(train_loader.dataset) - size_data_for_search
     dataset_for_search, _ = torch.utils.data.random_split(train_loader.dataset, [size_data_for_search, _])
     dataloader_for_search = torch.utils.data.DataLoader(dataset_for_search, batch_size=256, shuffle=True)
@@ -238,7 +238,7 @@ def train_and_test_MTANmodel_MM(model, MultiMNISt_params):
 
     train_loader, val_loader, test_loader = load_MultiMnist_data()
     
-    size_data_for_search = int(0.2 * len(train_loader.dataset))
+    size_data_for_search = int(0.5 * len(train_loader.dataset))
     _ = len(train_loader.dataset) - size_data_for_search
     dataset_for_search, _ = torch.utils.data.random_split(train_loader.dataset, [size_data_for_search, _])
     dataloader_for_search = torch.utils.data.DataLoader(dataset_for_search, batch_size=256, shuffle=True)
