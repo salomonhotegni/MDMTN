@@ -1,7 +1,6 @@
 import torch
-from torch import nn
+import torch.nn as nn
 import torch.nn.functional as F
-
 
 class MDMTNmgda_MultiTaskNetwork_II(nn.Module):
     """
@@ -20,7 +19,7 @@ class MDMTNmgda_MultiTaskNetwork_II(nn.Module):
         self.taskOutput = dict([(f"task_{t}", MultiTNTaskSpecific().to(self.device)) for t in range(self.num_of_tasks)])
         self.monitors = dict([(f"monitor_{t}", TaskMonitor(batch_size).to(self.device)) for t in range(self.num_of_tasks)])
         # WC scalarization variable "t"
-        self.wc_variable = nn.Parameter(torch.randn(1, requires_grad = True))
+        # self.wc_variable = nn.Parameter(torch.randn(1, requires_grad = True))
         self.static_a = static_a
         if self.static_a[0]:
             if self.static_a[1] is None:
@@ -49,9 +48,9 @@ class MDMTNmgda_MultiTaskNetwork_II(nn.Module):
             self.z_rep.append(shTask_out)
         return self.z_rep
 
-    def task_specific_forward(self, x=None):
+    def task_specific_forward(self, x):
         if x is None:
-            x = self.z
+            x = self.z_rep
         outputs = []
         for t in range(self.num_of_tasks):
             out = self.taskOutput[f"task_{t}"](x[t])
@@ -62,7 +61,7 @@ class MDMTNmgda_MultiTaskNetwork_II(nn.Module):
         z = self.shared_forward(x)
         return self.task_specific_forward(z)
 
-    def zero_grad(self, set_to_none: bool = False) -> None:
+    def zero_grad(self, ) -> None:
         self.shared.zero_grad()
         for t in range(self.num_of_tasks):
             self.taskOutput[f"task_{t}"].zero_grad()
@@ -71,7 +70,7 @@ class MDMTNmgda_MultiTaskNetwork_II(nn.Module):
     def parameters(self):
         params = []
         params += self.shared.parameters()
-        params.append(self.wc_variable)
+        # params.append(self.wc_variable)
         for t in range(self.num_of_tasks):
             params += self.taskOutput[f"task_{t}"].parameters()
             params += self.monitors[f"monitor_{t}"].parameters()
@@ -155,3 +154,6 @@ class MultiTNTaskSpecific(nn.Module):
 
     def forward(self, x):
         return F.log_softmax(self.fc1(x), dim=1)
+    
+    
+# #############################################################################
