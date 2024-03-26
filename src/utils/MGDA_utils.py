@@ -276,15 +276,15 @@ def train_test_MGDA(model, data_name, mod_params_mgda, device):
     dt_string = datetime.datetime.now().strftime("%d-%m-%Y--%H-%M-%S")
     model_dir_path = model_dir_path + "/" + dt_string
     os.mkdir(model_dir_path)
+    
+    model_multi = model.to(device)
 
     for i in range(model_repetitions):
         t_0_rep = time()
         print(f"######## Repetition {i+1}/{model_repetitions} ########")
-        model_multi = model
+        # model_multi = model
         loss_fn = nn.CrossEntropyLoss()
-
         MTLOptimizerClass = build_MGDA_optimizer(torch.optim.SGD)
-
         mtl_optim = MTLOptimizerClass(model_multi.parameters(), lr=lr, momentum=momentum)
 
         for epoch in tqdm(range(training_epochs)):
