@@ -33,8 +33,6 @@ def train_multitask_model(train_loader, val_loader, model,
     # global variables
     violation_epochs = 0
     
-    # seq_batch = get_sequence(len(train_loader), num_batches)
-
     #--------------------------------------------------------------------------#
     # START ALGORITHM                                                          #
     #--------------------------------------------------------------------------#
@@ -52,12 +50,10 @@ def train_multitask_model(train_loader, val_loader, model,
             # Initialize the networks
             if init_model:
                 model = lsuv_init(model, train_loader, needed_std=1.0, std_tol=0.1,
-                                  max_attempts=10, do_orthonorm=True, device=device) # initialize the model weights
+                                max_attempts=10, do_orthonorm=True, device=device) # initialize the model weights
         else:
             max_iter = max_iter_retrain
             num_epochs = num_epochs_retrain
-            zero_layers = params_init["zero_layers"]
-            # similarity_m = params_init["similarity_m"]
             
     else:
         model = model.to(device)
@@ -67,8 +63,6 @@ def train_multitask_model(train_loader, val_loader, model,
     lmbd = torch.ones(num_tasks, requires_grad = False)/num_tasks
 
     #### LOOP
-    # cont = True
-    # iterate = 0
     ALL_TRAIN_LOSS = []
     ALL_VAL_ACCU = []
     ALL_ORIG_losses = []
@@ -105,10 +99,6 @@ def train_multitask_model(train_loader, val_loader, model,
             print("######################")
             print(f"#### EPOCH No {i+1}/{num_epochs} ####")
             print("######################")
-            # start_batch = epfinal + i*num_batches
-            # list_batch = seq_batch(start_batch)
-            # # epsilon = optimizer.param_groups[0]['lr']
-            # act_state = [k, i]
             orig_train_losses, train_loss, val_accuracy, contrs_wc_after = inner_optimization(model, params_init, optimizer, w, a, epsilon, criterion, train_loader, val_loader, device, num_tasks,
                                     mu, lmbd,  act_bst_accu, best_exist)
             
@@ -123,14 +113,18 @@ def train_multitask_model(train_loader, val_loader, model,
                     if (sparsity_RT >= min_sparsRate) and (best_accu_search < val_accuracy.mean().item()):
                             succeed_bst = True
                             best_accu_search = val_accuracy.mean().item()
-                            torch.save(model.state_dict(), MODEL_FILE)
+                            # torch.save(model.state_dict(), MODEL_FILE)
+                            torch.save(model, MODEL_FILE)
 
             if(best_avg_val_accu < val_accuracy.mean().item()):
                 if not is_search:
                     succeed_bst = True
-                    torch.save(model.state_dict(), MODEL_FILE)
+                    # torch.save(model.state_dict(), MODEL_FILE)
+                    torch.save(model, MODEL_FILE)
                 else:
-                    torch.save(model.state_dict(), DRAFT_MODEL_FILE)
+                    # torch.save(model.state_dict(), DRAFT_MODEL_FILE)
+                    torch.save(model, DRAFT_MODEL_FILE)
+                    
                 best_avg_val_accu = val_accuracy.mean().item()
                 BEST_val_accu = val_accuracy.numpy()
                 BEST_contrs_after_optim = contrs_wc_after
@@ -168,13 +162,15 @@ def train_multitask_model(train_loader, val_loader, model,
         
         ### STOP after a given "maximum number of iterations" 
         k = k + 1
-   
+
     #### RETURN FINAL (BEST) MODEL
     if succeed_bst:
-        model.load_state_dict(torch.load(MODEL_FILE))
+        # model.load_state_dict(torch.load(MODEL_FILE))
+        model = torch.load(MODEL_FILE)
     else:
         print("Could not find a model with the required sparsity rate!\n The model with the highest accuracy has been returned!")
-        model.load_state_dict(torch.load(DRAFT_MODEL_FILE))
+        # model.load_state_dict(torch.load(DRAFT_MODEL_FILE))
+        model = torch.load(DRAFT_MODEL_FILE)
         
     tr_metrics, _ = metrics_tr(model, verbose = False)
             
@@ -182,7 +178,7 @@ def train_multitask_model(train_loader, val_loader, model,
 
 
 def full_training(train_loader, val_loader, model,
-                          params_init, init_model = True):
+                        params_init, init_model = True):
     if params_init["Sparsity_study"]:
         print("################################")
         print(f"#### SPARSITY inducing ... ####")
@@ -193,7 +189,7 @@ def full_training(train_loader, val_loader, model,
         print("################################")
     params_init["is_search"] = True
     model, TR_metrics, ALL_TRAIN_LOSS, ALL_VAL_ACCU, ALL_ORIG_losses, MODEL_VAL_ACCU, BEST_val_accu, Best_iter = train_multitask_model(train_loader, val_loader, model,
-                          params_init, init_model = init_model)
+                        params_init, init_model = init_model)
     
     if params_init["w"][0] > 0 and params_init["Sparsity_study"]:
         _, ZERO_layers = sparsity_info(model)
@@ -215,7 +211,7 @@ def full_training(train_loader, val_loader, model,
         print("###############################")
         params_init["is_search"] = False    
         model, TR_metrics, ALL_TRAIN_LOSS, ALL_VAL_ACCU, ALL_ORIG_losses, MODEL_VAL_ACCU, BEST_val_accu, Best_iter =  train_multitask_model(train_loader, val_loader, model,
-                              params_init, init_model = False)
+                            params_init, init_model = False)
     
         T_1 = time()-t_0
         # Print computation time
