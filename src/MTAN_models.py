@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 ###################################
-######## MULTI-TASK MODELS #########
+######## MULTI-TASK MODEL #########
 ###################################
 
 class MTAN_Network_I(nn.Module):
@@ -97,6 +97,7 @@ class MTAN_Network_I(nn.Module):
         self.Shared_block.zero_grad()
         for t in range(self.num_tasks-1):
             self.task_blocks[t].zero_grad()  
+            self.att_blocks[t].zero_grad()
 
     def mt_parameters(self):
         params = list(self.Shared_block.parameters())
@@ -204,6 +205,7 @@ class MTAN_Network_II(nn.Module):
         self.Shared_block.zero_grad()
         for t in range(self.num_tasks-1):
             self.task_blocks[t].zero_grad()  
+            self.att_blocks[t].zero_grad()
 
     def mt_parameters(self):
         params = list(self.Shared_block.parameters())
