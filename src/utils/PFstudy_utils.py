@@ -106,9 +106,10 @@ def Train_Test_PFstudy(ws, train_loader, val_loader, test_loader, params,
         mod_logdir = "Sparse_"+data_name+"_model_k1_"+str(w[0])+"_k2_"+str(w[1])+"_k3_"+str(w[2])
         params["mod_logdir"] = mod_logdir
         
-        # Create an instance of the model
-        model = inst_model
-        model.load_state_dict(torch.load(SPARSE_MODEL_FILE))
+        # # Create an instance of the model
+        # model = inst_model
+        # model.load_state_dict(torch.load(SPARSE_MODEL_FILE))
+        model = torch.load(SPARSE_MODEL_FILE)
         params["info_sparse_model"] = get_sparse_model_info(model)
         
         # Train model
