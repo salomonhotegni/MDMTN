@@ -6,19 +6,24 @@ import torch
 ###################################
 
 # Define function for testing a model
-def test_multitask_model(test_loader, model, params_init, TR_metrics):
+def test_multitask_model(test_loader, model, params_init, TR_metrics, load = True):
     
         num_model, device = params_init["num_model"], params_init["device"]
         num_tasks, main_dir, mod_logdir = params_init["num_tasks"], params_init["main_dir"] , params_init["mod_logdir"] 
     
         # Set model to evaluation mode
-        model1 = model.to(device)
-        if TR_metrics[0]:
-            MODEL_FILE = str("%s/%s/model%03d.pth"%(main_dir, mod_logdir, num_model))
-        else:
-            MODEL_FILE = str("%s/%s/draft_model%03d.pth"%(main_dir, mod_logdir, num_model))
-        model1.load_state_dict(torch.load(MODEL_FILE))
+        if load:
+            if TR_metrics[0]:
+                MODEL_FILE = str("%s/%s/model%03d.pth"%(main_dir, mod_logdir, num_model))
+            else:
+                MODEL_FILE = str("%s/%s/draft_model%03d.pth"%(main_dir, mod_logdir, num_model))
+            
+            print(MODEL_FILE)
+            # model.load_state_dict(torch.load(MODEL_FILE))
+            model = torch.load(MODEL_FILE)
+            print("Model loaded !")
         
+        model = model.to(device)
         model.eval()
         test_CORR = torch.zeros(num_tasks-1)
         with torch.no_grad():
