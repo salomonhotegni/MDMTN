@@ -28,8 +28,6 @@ def create_GrOWL_params(model, n):
         else:
             raise ValueError("Type should be 'spike', 'linear', or 'Dejiao'!")
         ###############################         
-
-               
             
 def apply_growl(model,):
             model_weights = model.state_dict()
@@ -254,7 +252,7 @@ def keep_sparse(model, info_sparse_model):
                 # Update weight
                 weight.copy_(reshaped_weight)
         ######################################
-               
+        
 def metrics_tr(model, verbose = True):
         sparsity_ratio = 0.0
         compr_ratio = 1.0
