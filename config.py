@@ -57,28 +57,28 @@ def get_params(k, archi_name, data_name, main_dir, mod_logdir, num_model, Sparsi
     
     if data_name == "Cifar10Mnist":
         mod_params = {"w": k, "a": torch.zeros(3),
-                           "epsilon": 0.0001, "num_tasks": 3, "num_outs": [10, 10],
+                        "epsilon": 0.0001, "num_tasks": 3, "num_outs": [10, 10],
                         "max_iter": 12, "max_iter_search": 3, "max_iter_retrain": 10,  
                         "lr": 0.0001, "lr_sched_coef": 0.98, "LR_scheduler": True, 
-                     "num_epochs": 3, "num_epochs_search": 3, "num_epochs_retrain": 3, "tol_epochs": None,
-                     "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
-                     "mu": 6.8e-08,#  9e-08,
-                     "rho": 2,
-                     "base_optimizer": optim.Adam, "is_search": Sparsity_study, "Sparsity_study": Sparsity_study,
-                      "criterion": torch.nn.functional.nll_loss,}
+                    "num_epochs": 3, "num_epochs_search": 3, "num_epochs_retrain": 3, "tol_epochs": None,
+                    "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
+                    "mu": 6.8e-08,
+                    "rho": 2,
+                    "base_optimizer": optim.Adam, "is_search": Sparsity_study, "Sparsity_study": Sparsity_study,
+                    "criterion": torch.nn.functional.nll_loss,}
         
         GrOWL_parameters = {"tp": "spike", #"Dejiao", #"linear", 
                     "beta1": 0.8,  
                     "beta2": 0.2, 
-                   "proxOWL": proxOWL,
-                   "skip_layer": 3, # Skip layer with "3" neuron
-                   "sim_preference": 0.8,
-                   }
+                "proxOWL": proxOWL,
+                "skip_layer": 3, # Skip layer with "3" neurons
+                "sim_preference": 0.8,
+                }
         
         
         if archi_name.lower() == "hps":
             mod_params["min_sparsRate"] = 5.00 # (5 %)
-            GrOWL_parameters["max_layerSRate"] = 0.15 # (15 %)
+            GrOWL_parameters["max_layerSRate"] = 0.15 # (15 %) 
             model = HardPS_MultiTaskNetwork_II(GrOWL_parameters, mod_params["num_outs"])
 
         elif archi_name.lower() == "mdmtn":
@@ -90,23 +90,23 @@ def get_params(k, archi_name, data_name, main_dir, mod_logdir, num_model, Sparsi
 
     elif data_name == "MultiMnist":
         mod_params = {"w": k, "a": torch.zeros(3),
-                           "epsilon": 0.0001, "num_tasks": 3, "num_outs": [10, 10],
+                        "epsilon": 0.0001, "num_tasks": 3, "num_outs": [10, 10],
                         "max_iter": 12, "max_iter_search": 3, "max_iter_retrain": 10, 
                         "lr": 0.0025, "lr_sched_coef": 0.5, "LR_scheduler": True, 
-                      "num_epochs": 3, "num_epochs_search": 3, "num_epochs_retrain": 3, "tol_epochs": None,
-                     "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
-                     "mu": 2.5e-08,  
-                     "rho": 2, 
-                     "base_optimizer": optim.Adam, "is_search": Sparsity_study, "Sparsity_study": Sparsity_study,
-                      "criterion": torch.nn.functional.nll_loss,}
+                    "num_epochs": 3, "num_epochs_search": 3, "num_epochs_retrain": 3, "tol_epochs": None,
+                    "num_model": num_model,"main_dir": main_dir, "mod_logdir": mod_logdir,
+                    "mu": 2.5e-08,  
+                    "rho": 2, 
+                    "base_optimizer": optim.Adam, "is_search": Sparsity_study, "Sparsity_study": Sparsity_study,
+                    "criterion": torch.nn.functional.nll_loss,}
         
         GrOWL_parameters = {"tp": "spike", #"Dejiao", #"linear", 
                     "beta1": 0.8,  
                     "beta2": 0.2, 
-                   "proxOWL": proxOWL,
-                   "skip_layer": 1, # Skip layer with "1" neuron
+                "proxOWL": proxOWL,
+                "skip_layer": 1, # Skip layer with "1" neuron
                     "sim_preference": 0.7, 
-                   }
+                }
         
         if archi_name.lower() == "hps":
             mod_params["min_sparsRate"] = 10.00 # (10 %)
@@ -124,7 +124,7 @@ def get_params(k, archi_name, data_name, main_dir, mod_logdir, num_model, Sparsi
 
     return model, mod_params, GrOWL_parameters
 
-#######################################################################
+##########################################################################
 
 def get_params_mgda(archi_name, data_name, model_dir_path, device):
 
