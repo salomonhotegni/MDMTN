@@ -96,15 +96,6 @@ def inner_optimization(model, params_init, optimizer, w, a, epsilon, criterion, 
                 optimizer.step()
 
                 train_loss = train_loss + loss.item()
-
-                # if int(len(list_batch)/5) > 0: print_step = int(len(list_batch)/5)
-                # else: print_step = 1
-                
-        #         if cbatch_ind % 50 == 0: #print_step == 0:
-        #             print('[BATCH ({}) ({:.0f}%)]\tLoss: {:.6f}'.format(
-        #                     batch_idx+1, 100. * cbatch_ind / len(list_batch),  loss.item()))
-        
-        # train_loss = train_loss/len(list_batch) 
         
                 if cbatch_ind % 50 == 0:
                     print('[BATCH ({}) ({:.0f}%)]\tLoss: {:.6f}'.format(
