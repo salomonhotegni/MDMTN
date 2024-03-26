@@ -1,5 +1,4 @@
 import torch
-import torch.backends.cudnn as cudnn
 
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -13,8 +12,11 @@ main_dir = "logs/MDMTN_CM_logs"
 mod_logdir = "MDMTN_model_CM_onek"
 archi_name = "MDMTN"
 data_name = "Cifar10Mnist"
-Sparsity_study = True #(use Sparsity_study = False, for k_0 = 0)
 num_model = 0
+if k[0] == 0:
+    Sparsity_study = False
+else:
+    Sparsity_study = True
 
 if __name__ == "__main__":
 
