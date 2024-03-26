@@ -28,7 +28,7 @@ class HPSmgda_MultiTaskNetwork_II(nn.Module):
 
     def task_specific_forward(self, x=None):
         if x is None:
-            x = self.z
+            x = self.z_rep
         outputs = []
         for t in range(self.num_of_tasks):
             out = self.taskOutput[f"task_{t}"](x)
