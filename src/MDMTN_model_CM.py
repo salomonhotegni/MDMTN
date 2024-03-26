@@ -18,7 +18,6 @@ class SparseMonitoredMultiTaskNetwork_II(nn.Module):
     The fourth and fifth components (monitors) are task-specific monitors that correct the output from the shared component before going to the task-specific output components.
     This model has the ability to induce sparsity through the GrOWL function (obj_sparsity).
     """
-
     def __init__(self, GrOWL_parameters, num_classes, static_a = [True, None]):
         super(SparseMonitoredMultiTaskNetwork_II, self).__init__()
         self.num_tasks = len(num_classes) + 1
@@ -130,7 +129,6 @@ class SparseMonitoredMultiTaskNetwork_II(nn.Module):
                     # if fc: lx(l-1) ----> (l-1)xl
                     # Therefore: Weight matrix's ROWS ==> previous layer's NEURONS
                     org_shape = weight.shape
-                    #print(f"{name}: {weight.shape}")
                     if ("task_blocks" in name) or (org_shape[1] == self.GrOWL_parameters["skip_layer"]): # Don't use GrOWL for the input and output layers
                         continue
 
