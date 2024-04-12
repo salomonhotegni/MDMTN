@@ -119,9 +119,8 @@ def train_multi(X, y, model, optimizer, loss_fn, batch_size, device, archi, img_
         batch_x = batch_x.reshape([batch_size, 1, img_shp[0], img_shp[1], img_shp[2]])
 
         shared_gradients = [[] for _ in range(model.num_of_tasks)]
+        model.zero_grad()
         for t in range(model.num_of_tasks):
-            model.zero_grad()
-
             # Full forward pass
             output = model.forward(batch_x)
 
