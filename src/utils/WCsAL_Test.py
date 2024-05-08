@@ -87,7 +87,8 @@ def test_single_model(test_loader, model, params_sg, load = True):
             test_loss += criterion(output, target, reduction='sum').item()
             pred = output.argmax(dim=1, keepdim=True)
             correct += pred.eq(target.view_as(pred)).sum().item()
-            wrong_images.extend(np.nonzero(~pred.eq(target.view_as(pred)).cpu().numpy())[0]+(100*batch_idx))
+            incorrect_indices = np.nonzero(~pred.eq(target.view_as(pred)).cpu().numpy())[0]
+            wrong_images.extend(incorrect_indices + (data.size(0) * batch_idx))
 
     print("Number of Misclassified images: ", len(wrong_images))
     test_accuracy = 100. * correct / len(test_loader.dataset)
