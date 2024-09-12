@@ -3,7 +3,7 @@
 Authors: [Sedjro Salomon Hotegni
 ](https://github.com/salomonhotegni), [Manuel Berkemeier](https://github.com/manuelbb-upb), and [Sebastian Peitz](https://github.com/SebastianPeitz).
 
-Contained within this repository is the source code corresponding to our paper titled "[Multi-Objective Optimization for Sparse Deep Multi-Task Learning](https://arxiv.org/abs/2308.12243)". A new Multi-Task Learning (MTL) model architecture is introduced, namely the Monitored Deep Multi-Task Network (MDMTN). We investigate the feasibility of adaptively sparsifying the model during training to reduce model
+Contained within this repository is the source code corresponding to our paper titled "[Multi-Objective Optimization for Sparse Deep Multi-Task Learning](https://ieeexplore.ieee.org/document/10650994)". A new Multi-Task Learning (MTL) model architecture is introduced, namely the Monitored Deep Multi-Task Network (MDMTN). We investigate the feasibility of adaptively sparsifying the model during training to reduce model
 complexity and gain computational efficiency without significantly compromising its performance, if we are willing to apply task-specific adaptations to the network weights.
 
 <!--
