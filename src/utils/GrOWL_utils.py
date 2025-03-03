@@ -53,12 +53,13 @@ def apply_growl(model,):
 
                     ##########################################
                     # Create GrOWL params
-                    _, s_inds = torch.sort(n2_rows_W)
+                    # _, s_inds = torch.sort(n2_rows_W)
                     theta_is = create_GrOWL_params(model, len(s_inds))
-                    sorted_theta_is = [theta_is[i] for i in torch.argsort(s_inds)]
+                    # sorted_theta_is = [theta_is[i] for i in torch.argsort(s_inds)]
 
                     # Prox operator
-                    new_n2_rows_W = proxOWL(n2_rows_W.cpu().numpy(), np.array(sorted_theta_is))
+                    # new_n2_rows_W = proxOWL(n2_rows_W.cpu().numpy(), np.array(sorted_theta_is))
+                    new_n2_rows_W = proxOWL(n2_rows_W.cpu().numpy(), np.array(theta_is))
 
                     
                     new_W = torch.zeros_like(reshaped_weight)
