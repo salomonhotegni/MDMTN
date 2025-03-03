@@ -54,7 +54,8 @@ def apply_growl(model,):
                     ##########################################
                     # Create GrOWL params
                     # _, s_inds = torch.sort(n2_rows_W)
-                    theta_is = create_GrOWL_params(model, len(s_inds))
+                    # theta_is = create_GrOWL_params(model, len(s_inds))
+                    theta_is = create_GrOWL_params(model, len(n2_rows_W))
                     # sorted_theta_is = [theta_is[i] for i in torch.argsort(s_inds)]
 
                     # Prox operator
