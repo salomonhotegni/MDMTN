@@ -76,8 +76,9 @@ def apply_growl(model,):
                     zero_row_idcs = torch.nonzero((new_W == 0).all(dim=1)).squeeze()
                     max_slct = int(pl_srate*new_W.shape[0])
                     if (torch.numel(zero_row_idcs) > max_slct):
-                        use_slct = new_W.shape[0]-max_slct
+                        # use_slct = new_W.shape[0]-max_slct
                         numel = zero_row_idcs.numel()
+                        use_slct = numel-max_slct
                         shuffled_idcs = torch.randperm(numel)
                         selected_idcs = shuffled_idcs[:use_slct]
                         selected_elmts = zero_row_idcs.flatten()[selected_idcs]
