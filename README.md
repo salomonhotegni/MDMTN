@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Images/MDMTN_rem.png" style="width: 40%; height: auto;">
+  <img src="Images/MDMTN_rem.png" style="width: 20%; height: auto;">
 </p>
 
 # Multi-Objective Optimization for Sparse Deep Multi-Task Learning (IJCNN 2024)
