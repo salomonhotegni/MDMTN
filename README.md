@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Images/MDMTN_rem.png" style="width: 40%; height: auto;">
+</p>
+
 # Multi-Objective Optimization for Sparse Deep Multi-Task Learning (IJCNN 2024)
 
 Authors: [Sedjro Salomon Hotegni
@@ -11,11 +15,17 @@ complexity and gain computational efficiency without significantly compromising 
     <img src="/Images/MDMTN_diag_new.jpg" alt="Monitored Deep Multi-Task Network" width="550" height="300">
 </div>
 -->
-
+<!--
 <figure class="image" style="text-align:center;">
   <img src="/Images/MDMTN_diag_new.jpg">
   <figcaption>Figure 1. Diagram of the Monitored Deep Multi-Task Network (MDMTN) with two main tasks. The task-specific monitors are designed to capture task-specific information that the shared network may miss.</figcaption>
 </figure> 
+-->
+<p align="center">
+  <img src="Images/MDMTN_diag_new.jpg" style="width: 40%; height: auto;">
+    <figcaption>Figure 1. Diagram of the Monitored Deep Multi-Task Network (MDMTN) with two main tasks. The task-specific monitors are designed to capture task-specific information that the shared network may miss.</figcaption>
+</p>
+
 
 
 <br />The framework for conducting experiments is based on PyTorch. The code has been tested within the Python 3 environment using JupiterLab, and necessitates the use of some Python packages: ```pytorch, torchvision, numpy, Pillow, scipy,```
